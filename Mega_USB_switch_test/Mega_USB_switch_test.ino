@@ -6,7 +6,7 @@ const int conPin = 40;
 void setup() {
   pinMode(conPin, OUTPUT);
   Serial.begin(115200);
-  Serial.println("Connect USB (YorN)");
+  Serial.println("Connecting to USB(YorN)??");
 }
 
 void loop() {
@@ -19,7 +19,7 @@ void loop() {
   if (incomingByte == 'Y'){
     analogWrite(conPin, 255);
   }
-  else {
+  else if(incomingByte == 'N'){
     analogWrite(conPin, 0);
   }
 }
