@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 
 import serial
+import sys
 
 ser=serial.Serial('/dev/ttyUSB0',115200)
-#print ser.read()
-while 1:
-  print("Connecting to USB ??")
-  try:
-    x=raw_input("Input(Y or N) : ")
-    ser.write(x)
-  except KeyboardInterrupt:
-    print("")
-    break
+
+print("Connecting to USB ??")
+print "Input(Y or N) : ",sys.argv[1]
+ser.write(sys.argv[1])
+
 

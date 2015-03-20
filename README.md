@@ -16,4 +16,8 @@ Arduino_USB
               1.change the syntax
               2.Interpreter Mega_Python.py
               3.manage error message
-             
+              4.change name(Mega_Python->ui_python)
+
+#### 20150319 ui_python
+              1.add time input(time_script.sh)
+              2.modified while loop(ui_python.py)               
