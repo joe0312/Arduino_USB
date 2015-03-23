@@ -20,4 +20,7 @@ Arduino_USB
 
 #### 20150319 ui_python
               1.add time input(time_script.sh)
-              2.modified while loop(ui_python.py)               
+              2.modified while loop(ui_python.py)   
+
+#### 20150323 ui_python
+              Uncertain varables for operating mode(time_script.sh)            
