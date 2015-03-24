@@ -23,4 +23,8 @@ Arduino_USB
               2.modified while loop(ui_python.py)   
 
 #### 20150323 ui_python
-              Uncertain varables for operating mode(time_script.sh)            
+              Uncertain varables for operating mode(time_script.sh)
+
+#### 20150324 ui_python
+              1.add detected com port choose(time_script.sh)
+              2.detected com port(ui_python.py)           
