@@ -28,3 +28,9 @@ Arduino_USB
 #### 20150324 ui_python
               1.add detected com port choose(time_script.sh)
               2.detected com port(ui_python.py)
+
+#### 20150324 ui_python
+              eliminate space
+
+#### 20150325 time_script.sh
+              modified the syntax
