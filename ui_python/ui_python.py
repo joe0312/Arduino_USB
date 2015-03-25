@@ -1,42 +1,51 @@
 #!/usr/bin/env python
 
 import sys
-import glob
 import serial
+import serial.tools.list_ports
+
+
+##### Receive message #####
+if len(sys.argv) != 3 :
+	print "Input format error(python)!!"
+	sys.exit(1)
+elif sys.argv[2] != "Y" and sys.argv[2] != "N":
+	print("Switch input error(python)!!") 
+	sys.exit(1)
+else:
+	deviceopt=sys.argv[1]
+	switchopt=sys.argv[2]
+
 
 ##### Detected com port #####
-if sys.platform.startswith('win'):
-	ports = ['COM' + str(i + 1) for i in range(256)]
+if deviceopt == "auto":
+	ports=list(serial.tools.list_ports.comports())
 
-elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-	ports = glob.glob('/dev/tty[A-Za-z]*')
-
+	for i in range(0,len(ports)):
+		try:
+			ser = serial.Serial(ports[i][0],115200,timeout=1)
+			msg=ser.readline()
+			ser.write('C')
+			msg=ser.readline()
+			ser.close()
+			if msg == "Connect received: C\r\n":
+				device=ports[i][0]
+				break
+		except (OSError, serial.SerialException):
+			pass
+	print "Device com port is ",device
+	ser=serial.Serial(device,115200)
 else:
-	raise EnvironmentError('Unsupported platform')
-
-result = []
-
-for port in ports:
 	try:
-		s = serial.Serial(port)
-		s.close()
-		result.append(port)
+		ser=serial.Serial(deviceopt,115200)
 	except (OSError, serial.SerialException):
-	pass
-print(result[0])
+		print("Device input error(python)!!")
+		sys.exit(1)
 
 
 ##### Transfer connecr message #####
-if sys.argv[1] == "auto":
-	ser=serial.Serial(result[0],115200)
-	print("Connecting to USB ??")
-	print "Input(Y or N) : ",sys.argv[2]
-	ser.write(sys.argv[2].encode())
+print("Connecting to USB ??")
+print "Input(Y or N) : ",switchopt
+ser.write(switchopt)
 
-else:
-	ser=serial.Serial(sys.argv[1],115200)
-	print("Connecting to USB ??")
-	print "Input(Y or N) : ",sys.argv[2]
-	ser.write(sys.argv[2].encode())
-
-print(ser)
+# print(ser)

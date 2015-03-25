@@ -37,3 +37,6 @@ Arduino_USB
 
 #### 20150325 mega_usb_switch_test
               modified to digitalwrite
+
+#### 20150325 ui_python.py
+              detected and verification com port
