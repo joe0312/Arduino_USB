@@ -34,3 +34,6 @@ Arduino_USB
 
 #### 20150325 time_script.sh
               modified the syntax
+
+#### 20150325 mega_usb_switch_test
+              modified to digitalwrite

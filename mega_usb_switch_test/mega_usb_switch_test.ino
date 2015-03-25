@@ -17,10 +17,10 @@ void loop() {
   }
   
   if (incomingByte == 'Y'){
-    analogWrite(conPin, 255);
+    digitalWrite(conPin, HIGH);
   }
   else if(incomingByte == 'N'){
-    analogWrite(conPin, 0);
+    digitalWrite(conPin, LOW);
   }
 }
 
