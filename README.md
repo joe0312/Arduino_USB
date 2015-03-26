@@ -40,3 +40,6 @@ Arduino_USB
 
 #### 20150325 ui_python.py
               detected and verification com port
+
+#### 20150326 time_script.sh
+              modified error message

@@ -2,11 +2,15 @@
 
 
 ###### Default ######
+opentime=0
+closetime=0
+
+###### Interactive ######
 if [ $# -eq 0 ];then
-	devopt="auto"
-	op_mode="loop"
 	read -p "Please input USB open time(s) : " opentime
         read -p "Please input USB close time(s) : " closetime
+	echo `python ui_python.py auto D`
+        read -p "Please input Device com port : " devopt
 fi
 
 ###### Variables ####
@@ -17,12 +21,17 @@ while [ "$1" ]
 do
 	case $1 in
 	-d|--dev)
-		devopt=$2
+		if [ $2 = "auto" ];then
+			devoptstr=`python ui_python.py auto D`
+			devopt=`echo $devoptstr | cut -d ' ' -f 5`
+		else
+			devopt=$2
+		fi
 		shift 2
 		;;
 	-o|--opentime)
 		if [ `echo $2 | grep "^[0-9]*$"` ];then
-			op_mode="loop"
+			mode="time"
 			opentime=$2
 			shift 2
 		else
@@ -33,7 +42,7 @@ do
 		;;
 	-c|--closetime)
 		if [ `echo $2 | grep "^[0-9]*$"` ];then
-			op_mode="loop"
+			mode="time"
 			closetime=$2
 			shift 2
 		else
@@ -43,12 +52,13 @@ do
 		fi
 		;;
 	-m|--mode)
-		if [ $2 = "on" -o $2 = "Y" ];then
-			op_mode="single"
-			switchopt="Y"
+		if [ $mode = "time" ];then
+			echo "input format error(-m and -o/-c can't exist at the same time)!!"
+			exit 1
+		elif [ $2 = "on" -o $2 = "Y" ];then
+			opemtime=1
 		elif [ $2 = "off" -o $2 = "N" ];then
-			op_mode="single"
-			switchopt="N"
+			closetime=1
 		else
 			echo "mode input error!!"
 			exit 1
@@ -67,7 +77,7 @@ do
 done
 
 ##### Operating mode #####
-if [ "$op_mode" = "loop" ];then
+if [ $opentime -gt 0 -a $closetime -gt 0 ];then
 	while :
 	do
 		sleep $opentime
@@ -75,7 +85,11 @@ if [ "$op_mode" = "loop" ];then
 		sleep $closetime
 		python ui_python.py $devopt N
 	done
-elif [ "$op_mode" = "single" ];then
-	python ui_python.py $devopt $switchopt
+elif [ $opentime -gt 0 ];then
+	python ui_python.py $devopt Y
+elif [ $closetime -gt 0 ];then
+	python ui_python.py $devopt N
+else
+	echo "input format error!!"
 fi
 
