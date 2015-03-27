@@ -43,3 +43,6 @@ Arduino_USB
 
 #### 20150326 time_script.sh
               modified error message
+
+#### 20150326 ui_python.py
+              modified error message
