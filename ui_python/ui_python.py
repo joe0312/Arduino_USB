@@ -7,10 +7,7 @@ import serial.tools.list_ports
 
 ##### Receive message #####
 if len(sys.argv) != 3 :
-	print "Input format error(python)!!"
-	sys.exit(1)
-elif sys.argv[2] != "Y" and sys.argv[2] != "N":
-	print("Switch input error(python)!!") 
+	print "Error: input error parameter"
 	sys.exit(1)
 else:
 	deviceopt=sys.argv[1]
@@ -19,33 +16,47 @@ else:
 
 ##### Detected com port #####
 if deviceopt == "auto":
-	ports=list(serial.tools.list_ports.comports())
-
-	for i in range(0,len(ports)):
+	for ports in serial.tools.list_ports.comports():
 		try:
-			ser = serial.Serial(ports[i][0],115200,timeout=1)
+			ser = serial.Serial(ports[0],115200,timeout=1)
 			msg=ser.readline()
 			ser.write('C')
 			msg=ser.readline()
-			ser.close()
 			if msg == "Connect received: C\r\n":
-				device=ports[i][0]
+				device=ports[0]
 				break
 		except (OSError, serial.SerialException):
 			pass
-	print "Device com port is ",device
-	ser=serial.Serial(device,115200)
+	try:
+		print "Device com port is ",device
+	except (NameError):
+		print("not detection(Please plug in device)")
+		sys.exit(1)
 else:
 	try:
-		ser=serial.Serial(deviceopt,115200)
+		ser=serial.Serial(deviceopt,115200,timeout=1)
+		msg=ser.readline()
+		ser.write('C')
+		msg=ser.readline()
+		if msg != "Connect received: C\r\n":
+			print("Error: invalid device \"%s\""%(deviceopt))
+			sys.exit(1)
 	except (OSError, serial.SerialException):
-		print("Device input error(python)!!")
+		print("Error: invalid device \"%s\""%(deviceopt))
 		sys.exit(1)
 
 
-##### Transfer connecr message #####
-print("Connecting to USB ??")
-print "Input(Y or N) : ",switchopt
-ser.write(switchopt)
+
+##### Transfer connect message #####
+if switchopt == "D":
+	sys.exit(1)
+elif switchopt in "YyNn":
+	print("Connecting to USB ??")
+	print "Input(Y or N) : ",switchopt
+	msg=ser.readline()
+	ser.write(switchopt)
+else:
+	print("Error: action should be connect\"Y\" or dicconnect\"N\"")
+	sys.exit(1)
 
 # print(ser)
