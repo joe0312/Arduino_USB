@@ -1,31 +1,36 @@
 #!/bin/sh
 
 
+RED=`echo "\33[31m"`
+BLUE=`echo "\33[34m"`
+WHITE=`echo "\33[37m"`
+
 ###### Usage here documents ######
 usage_heredoc(){
 cat << EOF
 
-NAME
+${BLUE}NAME${WHITE}
 	time_script - USB connect mode
 
-SYNOPSIS
-	time_script [options]
+${BLUE}SYNOPSIS${WHITE}
+	time_script [${BLUE}options${WHITE}]
 	time_script
-	time_script -d comport -t opentime,closetime
-	time_script -d comport -s switchopt
+	time_script ${BLUE}-d ${RED}deviceopt${WHITE} ${BLUE}-t ${RED}opentime,closetime${WHITE}
+	time_script ${BLUE}-d ${RED}deviceopt${WHITE} ${BLUE}-s ${RED}switchopt${WHITE}
 
-DESCRIPTION
-	-d,--device comport
-		Connect to controller(Arduino) with device com port(comport)
-		If you don't know the corresponding com port,you can use "auto" to detect the device
+${BLUE}DESCRIPTION
+	${BLUE}-d,--device ${RED}deviceopt${WHITE}
+		Connect to controller(Arduino) with device com port(${RED}deviceopt${WHITE})
+		If you don't know the corresponding com port,you can use ${RED}"auto"${WHITE} to detect the device
 
-	-t,--time opentime,closetime
+	${BLUE}-t,--time ${RED}opentime,closetime${WHITE}
 		Use time loop mode to control USB connection
-		Repeat connect "opentime(s)" and disconnect "closetime(s)" action
+		Repeat connect ${RED}"opentime(s)"${WHITE} and disconnect ${RED}"closetime(s)"${WHITE} action
 
-	-s,--switch switchopt
+	${BLUE}-s,--switch ${RED}switchopt${WHITE}
 		Use simple switch mode to control USB connection
-		Connect USB when switchopt is "on" or "Y", disconnect USB when switchopt is "off" or "N"
+		Connect USB when switchopt is ${RED}"on"${WHITE} or ${RED}"Y"${WHITE}
+		Disconnect USB when switchopt is ${RED}"off"${WHITE} or ${RED}"N"${WHITE}
 
 EOF
 }
