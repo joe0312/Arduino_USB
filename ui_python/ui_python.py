@@ -4,25 +4,26 @@ import sys
 import serial
 import serial.tools.list_ports
 
-###### Usage here documents ######
-message="""
 
-NAME
+###### Usage here documents ######
+heredoc="""
+
+{BLUE}NAME{WHITE}
 	ui_python - Connect to controller and control USB connection
 
-SYNOPSIS
-	ui_python deviceopt actionopt
+{BLUE}SYNOPSIS{WHITE}
+	ui_python {RED}deviceopt actionopt{WHITE}
 
-DESCRIPTION
-	deviceopt
+{BLUE}DESCRIPTION{WHITE}
+	{RED}deviceopt{WHITE}
 		Connect to controller(Arduino) with device com port(deviceopt)
-		If you don't know the corresponding com port,you can use "auto" to detect the device
+		If you don't know the corresponding com port,you can use {RED}"auto"{WHITE} to detect the device
 
-	actionopt
+	{RED}actionopt{WHITE}
 		Transfer action signal(actionopt) to controller(Arduino)
-		"Y/y"  : connect USB
-		"N/n"  : disconnect USB
-		"scan" : detected the device com port and list it
+		{RED}"Y/y"{WHITE}  : connect USB
+		{RED}"N/n"{WHITE}  : disconnect USB
+		{RED}"scan"{WHITE} : detected the device com port and list it
 """
 
 
@@ -32,7 +33,7 @@ if len(sys.argv) == 3 :
 	actionopt=sys.argv[2]
 else:
 	print "Error: invalid parameter format"
-	print(message)
+	print(heredoc.format(RED="\33[31m",BLUE="\33[34m",WHITE="\33[37m"))
 	sys.exit(1)
 
 
