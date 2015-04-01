@@ -58,3 +58,6 @@ Arduino_USB
 
 #### 20150331 time_script.sh
               usage here documents(color)
+
+#### 20150401 ui_python.py
+              modified detected com port method
