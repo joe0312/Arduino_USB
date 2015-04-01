@@ -61,3 +61,6 @@ Arduino_USB
 
 #### 20150401 ui_python.py
               modified detected com port method
+
+#### 20150401 time_script.sh
+              modified detected com port method
