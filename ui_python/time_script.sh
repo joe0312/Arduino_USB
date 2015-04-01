@@ -38,9 +38,15 @@ EOF
 
 ###### Check device com port ######
 check_ui_python(){
-	devoptmsg=`python ui_python.py $1 $2`
+	if [ $# -eq 1 ];then
+		devoptmsg=`python ui_python.py $1`
+	elif [ $# -eq 2 ];then
+		devoptmsg=`python ui_python.py $1 $2`
+	fi
 	echo $devoptmsg
-	if [ `echo $devoptmsg | cut -d ' ' -f 1` = "Error:" ];then
+	if [ ! "$devoptmsg" ];then
+		echo $1
+	elif [ `echo $devoptmsg | cut -d ' ' -f 1` = "Error:" ];then
 		exit 1
 	fi
 }
@@ -62,9 +68,9 @@ if [ $# -eq 0 ];then
 		op_mode="time"
 	fi
 
-	echo `python ui_python.py auto scan`
+	echo `python ui_python.py auto`
 	read -p "Please input Device com port : " devopt
-	check_ui_python $devopt scan
+	check_ui_python $devopt
 fi
 
 
@@ -76,7 +82,7 @@ while [ "$1" ]
 do
 	case $1 in
 	-d|--device)
-		check_ui_python $2 scan
+		check_ui_python $2
 		if [ $2 = "auto" ];then
 			devopt=`echo $devoptmsg | cut -d ' ' -f 5`
 		else
